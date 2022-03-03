@@ -1,4 +1,4 @@
-FROM ruby:2.6
+FROM ruby:2.7
 RUN set -x && curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 RUN set -x && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -12,13 +12,14 @@ WORKDIR /app
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
+# RUN gem install rails
 COPY . /app
 
 # Add a script to be executed every time the container starts.
-COPY ./forDocker/rails/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+# COPY ./forDocker/rails/entrypoint.sh /usr/bin/
+# RUN chmod +x /usr/bin/entrypoint.sh
+# ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # Start the main process.
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# CMD ["rails", "server", "-b", "0.0.0.0"]
